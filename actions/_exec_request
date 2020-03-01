@@ -1,0 +1,39 @@
+#!/bin/bash
+
+case $ACTION in
+
+FIND_CONTENT)
+    . $BASEDIR/actions/find_content
+    ;;
+FIND_FILE)
+    . $BASEDIR/actions/find_file
+    ;;
+OPEN_FILE)
+    . $BASEDIR/actions/open_file
+    ;;
+COMPILE_FILE)
+    . $BASEDIR/actions/compile_file
+    ;;
+
+PREPROCESS_FILE)
+    . $BASEDIR/actions/preprocess_file
+    ;;
+    
+GET_ORIGIN_FILE)
+    . $BASEDIR/actions/get_origin_file
+    ;;
+    
+EXECUTE_FILE)
+    . $BASEDIR/actions/execute_file
+    ;;
+    
+SHOW_LOG)
+    . $BASEDIR/actions/show_log
+    ;;
+    
+*)
+    stop_execution "Unknown Action requested"
+    ;;
+esac
+        
+exit 0

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+COMPOBJ=$(echo -n -E ${FNAME_PATTERN} | sed -e 's/\\/\//g' -e 's/^'"$DOSUNIX"'/'"$UNIXPATH"'/')
+
+BASE="/u/coins"
+cd $BASE
+
+rm -f /tmp/pre-process.p
+
+OUTPUT=`$BASE/bin/coins.sh -bp /opt/oa/oacomm/compile.p -param $COMPOBJ`
+
+cd $BASEDIR
+if [ "${OUTPUT}" = "" ] ; then
+	echo -n -E 'u:\coins\tmp\pre-process.p'
+else
+	echo -e "Error. \n${OUTPUT}"
+fi

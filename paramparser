@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# Interpret back slash as a usual symbol
+read -r line
+
+IFS=$';'
+
+for param in ${line}
+do
+  case $param in
+
+  ACTION=* )
+      ACTION=`expr "$param" : "ACTION="'\(.*\)'`
+      ;;
+  SRCH_PATTERN=* )
+      SRCH_PATTERN=`expr "$param" : "SRCH_PATTERN="'\(.*\)'`
+      ;;
+  GREP_OPTIONS=* )
+      GREP_OPTIONS=`expr "$param" : "GREP_OPTIONS="'\(.*\)'`
+      ;;
+  FNAME_PATTERN=* )
+      FNAME_PATTERN=`expr "$param" : "FNAME_PATTERN="'\(.*\)'`
+      ;;
+  FIND_IN_DIR=* )
+      FIND_IN_DIR=`expr "$param" : "FIND_IN_DIR="'\(.*\)'`
+      ;;
+  SUBDIR_LIST=* )
+      SUBDIR_LIST=`expr "$param" : "SUBDIR_LIST="'\(.*\)'`
+      ;;
+  MAX_DEPTH=* )
+      MAX_DEPTH=`expr "$param" : "MAX_DEPTH="'\(.*\)'`
+      ;;
+  DUMP_OPTIONS=* )
+      DUMP_OPTIONS=`expr "$param" : "DUMP_OPTIONS="'\(.*\)'`
+      ;;
+  THE_END. )
+      [ -z "$ACTION" ] && exit 0 
+      break
+      ;;
+  *)
+      [ -z "$param" ] || stop_execution "Unknown parameter:($param)"
+      ;;
+  esac
+
+done
+
+[ -z "$ACTION" ] && stop_execution "Action is not defined"
+if [ "$DUMP_OPTIONS" == "Y" ] ; then
+  echo "ACTION=${ACTION}"
+  echo "SRCH_PATTERN=${SRCH_PATTERN}"
+  echo "GREP_OPTIONS=${GREP_OPTIONS}"
+  echo "FNAME_PATTERN=${FNAME_PATTERN}"
+  echo "FIND_IN_DIR=${FIND_IN_DIR}"
+  echo "SUBDIR_LIST=${SUBDIR_LIST}"
+  echo "MAX_DEPTH=${MAX_DEPTH}"
+fi

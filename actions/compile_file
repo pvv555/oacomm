@@ -1,0 +1,14 @@
+#!/bin/sh
+
+COMPOBJ=$(echo -n -E ${FNAME_PATTERN} | sed -e 's/\\/\//g' -e 's/^'"$DOSUNIX"'/'"$UNIXPATH"'/')
+
+cd /u/coins
+OUTPUT=`bin/compile.sh $COMPOBJ 2>&1`
+
+
+cd $BASEDIR
+if [ "${OUTPUT}" = "" ] ; then
+	echo "Compile OK"
+else
+	echo "${OUTPUT}" | unix2dos
+fi

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+COMPOBJ=$(echo -n -E ${FNAME_PATTERN} | sed -e 's/\\/\//g' -e 's/^'"$DOSUNIX"'/'"$UNIXPATH"'/')
+
+BASE="/u/coins"
+cd $BASE
+$BASE/bin/coins.sh -bp $COMPOBJ
+
+cd $BASEDIR

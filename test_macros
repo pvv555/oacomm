@@ -1,0 +1,23 @@
+#!/bin/sh
+
+BASEDIR=$(dirname $0)
+
+. $BASEDIR/configuration
+. $BASEDIR/functions
+# . $BASEDIR/paramparser
+
+GREPOPT="-HPzoi"
+MACNAME=$1
+PATTERN=$2
+SRCHDIR=$ABLCODEDIR
+FILEPAT=*
+
+PATTERN='(?s)\{'$MACNAME'\.i[^}]*'$PATTERN'.*?\}'
+
+[ -z "$PATTERN" ] && stop_execution "Search string is empty"
+
+echo "Looking for: $MACNAME and $PATTERN"
+echo "---"
+
+find "$SRCHDIR" -type f -name "glr*.p" \
+  -exec grep $GREPOPT "$PATTERN" {} + | sed -r 's/^'$UNIXPATH'/'$UNIXDOS'/; s/\//\\/g' | unix2dos

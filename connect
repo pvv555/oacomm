@@ -1,0 +1,11 @@
+#!/bin/bash
+
+BASEDIR=$(dirname $0)
+
+. $BASEDIR/configuration
+. $BASEDIR/functions
+. $BASEDIR/paramparser
+
+. $BASEDIR/actions/_exec_request | unix2dos
+
+exit 0

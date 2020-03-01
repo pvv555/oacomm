@@ -1,0 +1,35 @@
+#!/bin/sh
+
+[ -z "$SRCH_PATTERN" ]  && stop_execution "Search string is empty"
+[ -z "$FNAME_PATTERN" ] && FNAME_PATTERN="*.[p,i]"
+[ -z "$FIND_IN_DIR" ]   && FIND_IN_DIR="db"
+[ -z "$MAX_DEPTH" ]     && MAX_DEPTH="1"
+
+# Exclusion. scripts resides in db
+if [ "$FIND_IN_DIR" == "scripts" ] ; then
+  FIND_IN_DIR="db/scripts"
+  MAX_DEPTH="1"
+fi
+
+if [ "$SUBDIR_LIST" == "*" ] || [ -z "$SUBDIR_LIST" ]; then
+  SUBDIR_LIST="-"
+fi
+
+echo "Looking for: $SRCH_PATTERN"
+echo "---"
+
+IFS=$' '
+for sdir in ${SUBDIR_LIST}
+do
+  if [ "$sdir" == "-" ]; then 
+    sdir=''
+  else
+    sdir='/'${sdir}
+  fi
+
+  find "${GITDIR}/${FIND_IN_DIR}${sdir}" -type f -name "${FNAME_PATTERN}" -maxdepth ${MAX_DEPTH} \
+      -exec grep -inH $GREP_OPTIONS "$SRCH_PATTERN" {} + | sed -r 's/^'"$UNIXPATH"'/'"$UNIXDOS"'/'
+done
+
+echo "---"
+echo "Done."

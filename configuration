@@ -1,0 +1,22 @@
+
+BASEDIR=$(dirname $0)
+LOGFILE=/home/vlapav/web.log
+
+GITDIR=/u/git/coins
+ABLCODEDIR="$GITDIR"/db
+ABLCODEDIR2="$GITDIR"/cui
+JSCODEDIR="$ABLCODEDIR"/JavaScript
+
+OADATADIR=/u/git/coins/dat
+OAPAGEDIR="$OADATADIR"/sy_section
+
+DOSUNIX='[uU]:'
+UNIXDOS='u:'
+UNIXPATH='\/u'
+
+# DOSPATH='u:\\u\\git\\coins\\'
+# UNIXPATH='\/u\/git\/coins\/'
+
+DLC=/u/dlc
+TERM=xterm
+export TERM DLC

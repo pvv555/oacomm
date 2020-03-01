@@ -1,0 +1,21 @@
+#!/bin/sh
+
+ORIGOBJ=$(echo -n -E ${FNAME_PATTERN} | sed -e 's/\\/\//g' -e 's/^'"$DOSUNIX"'/'"$UNIXPATH"'/')
+FILNAME=$(basename ${ORIGOBJ})
+PROBJ=$(echo -n ${ORIGOBJ} | cut -d'/' -f5-)
+
+cd /u/git/coins
+
+OAENV=$(git branch | grep \* | cut -d ' ' -f2 | cut -d '/' -f1)
+GETOBJ='u:\coins\tmp\'${OAENV}'_master_'${FILNAME}
+PUTOBJ='/u/coins/tmp/'${OAENV}'_master_'${FILNAME}
+
+git show "origin/${OAENV}/master:${PROBJ}" > ${PUTOBJ} 2>/u/coins/tmp/git_errors
+
+if [ $? -eq 0 ] ; then
+	echo -n "${GETOBJ}"
+else
+	echo -n 'u:\coins\tmp\git_errors'
+fi
+
+cd $BASEDIR

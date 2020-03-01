@@ -1,0 +1,5 @@
+stop_execution() {
+# cat > /dev/null
+  echo $1
+  exit 1
+}

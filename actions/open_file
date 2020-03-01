@@ -1,0 +1,13 @@
+#!/bin/sh
+
+[ -z "$FNAME_PATTERN" ] && stop_execution "Error. File name is empty"
+SRCHDIR="db|cui"
+
+IFS=$'|'
+for sdir in ${SRCHDIR}
+do
+  find "${GITDIR}/${sdir}" -type f -iname "${FNAME_PATTERN}" | (
+    read line
+    echo -n $line  | sed -r 's/^'"$UNIXPATH"'/'"$UNIXDOS"'/; s/\//\\/g'
+    exit 0 )
+done
